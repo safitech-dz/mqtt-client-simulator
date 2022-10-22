@@ -1,0 +1,35 @@
+{
+    "name": "mqttjs-client",
+    "description": "",
+    "version": "",
+    "scripts": {
+        "start": "node index.js",
+        "test": "vitest",
+        "coverage": "vitest run --coverage"
+    },
+    "repository": {
+        "type": "",
+        "url": ""
+    },
+    "keywords": [
+        "mqtt",
+        "client",
+        "mqttjs"
+    ],
+    "author": "medilies <medilies.contact@gmail.com>",
+    "license": "",
+    "dependencies": {
+        "chalk": "^5.1.2",
+        "dotenv": "^16.0.3",
+        "mqtt": "^4.3.7"
+    },
+    "devDependencies": {
+        "vitest": "^0.24.3"
+    },
+    "bugs": {
+        "url": ""
+    },
+    "homepage": "",
+    "type": "module",
+    "main": "index.js"
+}
