@@ -1,12 +1,10 @@
 import * as config from "./config.js";
 
-import * as fs from "fs";
 import * as mqtt from "mqtt";
 
+import fakers from "./fakers/fakers.js";
 import * as mqttUtils from "./mqtt/utils.js";
 import * as mqttLogger from "./mqtt/logger.js";
-
-const subTopics = JSON.parse(fs.readFileSync("./sub_topics.json"));
 
 const client = mqtt.connect(mqttUtils.formatConnectionOpts(config.mqtt));
 
@@ -15,10 +13,12 @@ console.log(client.options);
 client.on("connect", () => {
     mqttLogger.connect();
 
-    client.subscribe(subTopics, (err, grant) => {
-        if (err) mqttLogger.subscriptionError(err);
-        mqttLogger.subscribed(grant);
-    });
+    publishOnInterval(
+        client,
+        "simulator/simulator/OWM/actualWeather",
+        fakers.actualWeather.make,
+        5 * 60 * 60 * 1000
+    );
 });
 
 client.on("message", function (topic, message) {
@@ -34,3 +34,10 @@ client.on("close", mqttLogger.close);
 client.on("offline", mqttLogger.offline);
 client.on("end", mqttLogger.end);
 client.on("error", mqttLogger.error);
+
+function publishOnInterval(client, topic, msg, interval) {
+    client.publish(topic, msg());
+    return setInterval(() => {
+        client.publish(topic, msg());
+    }, interval);
+}
