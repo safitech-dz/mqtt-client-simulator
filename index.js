@@ -13,16 +13,19 @@ console.log(client.options);
 client.on("connect", () => {
     mqttLogger.connect();
 
-    publishOnInterval(
-        client,
-        "simulator/simulator/OWM/actualWeather",
-        fakers.actualWeather.make,
-        5 * 60 * 60 * 1000
-    );
+    fakers.forEach((topic) => {
+        publishOnInterval(
+            client,
+            topic.topic
+                .replace("%u", config.mqtt.username)
+                .replace("%d", config.mqtt.clientId),
+            topic.fake,
+            topic.frequency
+        );
+    });
 });
 
 client.on("message", function (topic, message) {
-    // message is Buffer
     console.log(message.toString());
     // ...
 });
