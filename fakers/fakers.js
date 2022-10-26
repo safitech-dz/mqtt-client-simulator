@@ -1,21 +1,17 @@
-import dummyjson from "dummy-json";
-
 import ActualWeatherFaker from "./pub/ActualWeatherFaker.js";
+import DailyWeatherFaker from "./pub/DailyWeatherFaker.js";
+import DripFaker from "./pub/DripFaker.js";
+import KCFaker from "./pub/KCFaker.js";
+import LastIrrigationDateFaker from "./pub/LastIrrigationDateFaker.js";
+import MethodFaker from "./pub/MethodFaker.js";
+import SprinklerFaker from "./pub/SprinklerFaker.js";
+import StateFaker from "./pub/StateFaker.js";
 
 export default [
     ActualWeatherFaker,
-    // {
-    //     topic: `%u/%d/OWM/dailyWeather`,
-    //     fake: null,
-    // },
-    // {
-    //     topic: `%u/%d/irrignnov_V1/state`,
-    //     fake: null,
-    // },
-    // {
-    //     topic: `%u/%d/irrignnov_V1/last_irrigation_date`,
-    //     fake: null,
-    // },
+    DailyWeatherFaker,
+    StateFaker,
+    LastIrrigationDateFaker,
     // {
     //     topic: `%u/%d/irrignnov_V1/last_irrigation_begin`,
     //     fake: null,
@@ -24,22 +20,10 @@ export default [
     //     topic: `%u/%d/irrignnov_V1/last_irrigation_end`,
     //     fake: null,
     // },
-    // {
-    //     topic: `%u/%d/irrignnov_V1/method`,
-    //     fake: null,
-    // },
-    // {
-    //     topic: `%u/%d/irrignnov_V1/kc`,
-    //     fake: null,
-    // },
-    // {
-    //     topic: `%u/%d/irrignnov_V1/drip`,
-    //     fake: null,
-    // },
-    // {
-    //     topic: `%u/%d/irrignnov_V1/sprinkler`,
-    //     fake: null,
-    // },
+    MethodFaker,
+    KCFaker,
+    DripFaker,
+    SprinklerFaker,
     // {
     //     topic: `%u/%d/irrignnov_V1/time`,
     //     fake: null,
