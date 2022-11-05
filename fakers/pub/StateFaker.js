@@ -1,5 +1,5 @@
 export default {
-    topic: `%u/%d/irrignnov_V1/state`,
+    topic: `%u/%d/actuator/irrignnov_V1/state`,
 
     fake: () => (Math.random() < 0.5 ? "1" : "0"),
 

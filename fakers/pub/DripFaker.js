@@ -1,5 +1,5 @@
 export default {
-    topic: `%u/%d/irrignnov_V1/drip`,
+    topic: `%u/%d/actuator/irrignnov_V1/drip`,
 
     fake: () =>
         `[

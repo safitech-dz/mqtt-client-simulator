@@ -1,5 +1,5 @@
 export default {
-    topic: `%u/%d/irrignnov_V1/method`,
+    topic: `%u/%d/actuator/irrignnov_V1/method`,
 
     fake: () => {
         let arr = [0, 1, 2];

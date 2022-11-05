@@ -1,7 +1,7 @@
 import dummyjson from "dummy-json";
 
 export default {
-    topic: `%u/%d/OWM/actualWeather`,
+    topic: `%u/%d/sensor/OWM/actualWeather`,
 
     fake: () =>
         dummyjson
