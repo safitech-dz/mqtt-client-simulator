@@ -1,3 +1,5 @@
+import * as fs from "fs";
+
 const formatConnectionOpts = (obj) => {
     return {
         protocol: obj.protocol,
@@ -12,4 +14,27 @@ const formatConnectionOpts = (obj) => {
     };
 };
 
-export { formatConnectionOpts };
+const parseTopicsDirectory = () => {
+    const topicsDirectory = JSON.parse(
+        fs.readFileSync("./topics_directory.json")
+    );
+
+    return topicsDirectory.map((entry) => {
+        return {
+            topic: entry.topic
+                .replace("%u", process.env.MQTT_USERNAME)
+                .replace("%d", process.env.MQTT_CLIENTID),
+            opts: {
+                qos: entry.qos,
+                retain: entry.retain,
+            },
+            definition: {
+                frequencyEvent: entry["frequency_event"],
+                format: entry.format,
+                faker: null,
+            },
+        };
+    });
+};
+
+export { formatConnectionOpts, parseTopicsDirectory };
