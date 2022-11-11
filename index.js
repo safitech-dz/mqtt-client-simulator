@@ -2,11 +2,13 @@ import * as config from "./config.js";
 
 import * as mqtt from "mqtt";
 
-import fakers from "./fakers/fakers.js";
+import setFaker from "./fakers/faker.js";
 import * as mqttUtils from "./mqtt/utils.js";
 import * as mqttLogger from "./mqtt/logger.js";
 
 const topics = mqttUtils.parseTopicsDirectory();
+
+topics.forEach(setFaker);
 
 console.dir(topics, { depth: null });
 
@@ -17,14 +19,20 @@ console.log(client.options);
 client.on("connect", () => {
     mqttLogger.connect();
 
-    fakers.forEach((topic) => {
+    topics.forEach((topic) => {
+        if (!topic.definition.faker.callback) {
+            // ! HACK
+            return;
+        }
+
+        console.log(topic.definition.faker);
+
         publishOnInterval(
             client,
-            topic.topic
-                .replace("%u", config.mqtt.username)
-                .replace("%d", config.mqtt.clientId),
-            topic.fake,
-            topic.frequency
+            topic.topic,
+            topic.definition.faker,
+            topic.opts,
+            topic.definition.frequencyEvent
         );
     });
 });
@@ -46,13 +54,15 @@ client.on("error", mqttLogger.error);
  *
  * @param {mqtt.MqttClient} client
  * @param {string} topic
- * @param {string} msg
+ * @param {obj} msg
+ * @param {obj|null} opts
  * @param {int} interval
  * @returns
  */
-function publishOnInterval(client, topic, msg, interval) {
-    client.publish(topic, msg());
+function publishOnInterval(client, topic, msg, opts, interval) {
+    client.publish(topic, msg.callback(msg.opts).toString(), opts);
+
     return setInterval(() => {
-        client.publish(topic, msg());
+        client.publish(topic, msg.callback(msg.opts).toString(), opts);
     }, interval);
 }

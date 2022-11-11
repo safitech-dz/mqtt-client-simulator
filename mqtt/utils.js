@@ -14,6 +14,9 @@ const formatConnectionOpts = (obj) => {
     };
 };
 
+/**
+ * @returns {array}
+ */
 const parseTopicsDirectory = () => {
     const topicsDirectory = JSON.parse(
         fs.readFileSync("./topics_directory.json")
@@ -29,9 +32,15 @@ const parseTopicsDirectory = () => {
                 retain: entry.retain,
             },
             definition: {
-                frequencyEvent: entry["frequency_event"],
+                // frequencyEvent: entry["frequency_event"],
+                // ! HACK
+                frequencyEvent: 1000 * 60 * 5,
+                type: entry.type,
                 format: entry.format,
-                faker: null,
+                faker: {
+                    callback: null,
+                    opts: null,
+                },
             },
         };
     });
