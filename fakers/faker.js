@@ -3,6 +3,7 @@ import booleanFaker from "./valueFakers/booleanFaker.js";
 import floatFaker from "./valueFakers/floatFaker.js";
 import integerFaker from "./valueFakers/integerFaker.js";
 import randomElementFaker from "./valueFakers/randomElementFaker.js";
+import timeFaker from "./valueFakers/timeFaker.js";
 
 export default (topic) => {
     const def = topic.definition;
@@ -15,6 +16,8 @@ export default (topic) => {
 
     if (def.type === "boolean") {
         topic.definition.faker.callback = booleanFaker;
+    } else if (def.type === "time") {
+        topic.definition.faker.callback = timeFaker;
     } else if (inParser(def.format)) {
         topic.definition.faker.callback = randomElementFaker;
         topic.definition.faker.opts = inParser(def.format);
