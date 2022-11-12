@@ -2,7 +2,7 @@ import inParser from "./rulesParsers/inParser.js";
 import booleanFaker from "./valueFakers/booleanFaker.js";
 import floatFaker from "./valueFakers/floatFaker.js";
 import integerFaker from "./valueFakers/integerFaker.js";
-import randomElementFaker from "./valueFakers/randomElementFaker.js";
+import arrayElement from "./valueFakers/arrayElement.js";
 import stringFaker from "./valueFakers/stringFaker.js";
 import timeFaker from "./valueFakers/timeFaker.js";
 
@@ -20,7 +20,7 @@ export default (topic) => {
     } else if (def.type === "time") {
         topic.definition.faker.callback = timeFaker;
     } else if (inParser(def.format)) {
-        topic.definition.faker.callback = randomElementFaker;
+        topic.definition.faker.callback = arrayElement;
         topic.definition.faker.opts = inParser(def.format);
     } else if (def.type === "integer") {
         topic.definition.faker.callback = integerFaker.callback;

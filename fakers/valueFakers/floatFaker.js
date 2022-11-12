@@ -1,13 +1,10 @@
+import { faker } from "@faker-js/faker";
 import maxParser from "../rulesParsers/maxParser.js";
 import minParser from "../rulesParsers/minParser.js";
 
 export default {
-    callback: (opt) => {
-        const min = Math.ceil(opt.min);
-
-        const max = Math.floor(opt.max);
-
-        return (Math.random() * (max - min) + min).toFixed(2) * 1;
+    callback: (opts) => {
+        return faker.datatype.float(opts);
     },
 
     /**
@@ -17,8 +14,16 @@ export default {
     optParser: (format) => {
         const opts = {};
 
-        opts["max"] = maxParser(format) ?? 1000.99;
-        opts["min"] = minParser(format) ?? 0.99;
+        const min = minParser(format);
+        const max = maxParser(format);
+
+        if (min) {
+            opts.min = min;
+        }
+
+        if (max) {
+            opts.max = max;
+        }
 
         // TODO in: & between:
 
